@@ -1,3 +1,5 @@
+import sys
+
 import git
 import os
 
@@ -5,12 +7,11 @@ import os
 repo = git.Repo(os.getcwd())
 
 # Get the blame for the file
-file_path = "path/to/file"
+file_path = sys.argv[1]
 blame = repo.git.blame(file_path)
 
 # Create a dictionary to store the person -> emoji mapping
 people = {}
-
 
 emojis = [
 "👨‍🔬",
@@ -31,8 +32,9 @@ emojis = [
 # Parse the blame output and add people with corresponding emojis
 for line in blame.splitlines():
     # Extract the person's name and email from the blame output
+    print(line)
     name, email = line.split()[2:4]
-
+    print(name, email)
     # Check if the person is already in the dictionary
     if (name, email) not in people:
         people[(name, email)] = emojis[len(people)-1]
